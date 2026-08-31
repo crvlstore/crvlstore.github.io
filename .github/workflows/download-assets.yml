@@ -1,0 +1,76 @@
+name: Download reference site assets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    name: Download and commit assets from reference site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install wget
+        run: sudo apt-get update && sudo apt-get install -y wget
+
+      - name: Download reference site
+        run: |
+          set -euo pipefail
+          REF_URL="https://girafinha67.github.io/CRVL-store-/"
+          TMP="tmp_ref_site"
+          mkdir -p "$TMP"
+          cd "$TMP"
+          # Mirror the site into tmp_ref_site
+          wget --mirror --convert-links --adjust-extension --no-parent "$REF_URL"
+
+      - name: Collect images & fonts
+        run: |
+          set -euo pipefail
+          REPO_ROOT="${{ github.workspace }}"
+          TMP_DIR="$REPO_ROOT/tmp_ref_site/girafinha67.github.io/CRVL-store-"
+          echo "Looking for downloaded files in: $TMP_DIR"
+          mkdir -p "$REPO_ROOT/assets/images" "$REPO_ROOT/assets/fonts"
+          if [ -d "$TMP_DIR" ]; then
+            # copy image files
+            find "$TMP_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.svg" -o -iname "*.webp" \) -print0 | xargs -0 -I {} cp {} "$REPO_ROOT/assets/images/"
+            # copy font files
+            find "$TMP_DIR" -type f \( -iname "*.woff" -o -iname "*.woff2" -o -iname "*.ttf" -o -iname "*.otf" \) -print0 | xargs -0 -I {} cp {} "$REPO_ROOT/assets/fonts/" || true
+          else
+            echo "Downloaded directory not found. wget may have failed or site structure is different." >&2
+            ls -la tmp_ref_site || true
+            exit 1
+          fi
+
+      - name: Normalize filenames (remove query strings)
+        run: |
+          set -euo pipefail
+          # Some files may have query strings in names - normalize by using basename
+          for f in assets/images/*; do
+            [ -e "$f" ] || continue
+            bn=$(basename "$f" | sed 's/?.*$//')
+            if [ "$bn" != "$(basename "$f")" ]; then
+              mv "$f" "assets/images/$bn"
+            fi
+          done
+          for f in assets/fonts/*; do
+            [ -e "$f" ] || continue
+            bn=$(basename "$f" | sed 's/?.*$//')
+            if [ "$bn" != "$(basename "$f")" ]; then
+              mv "$f" "assets/fonts/$bn"
+            fi
+          done
+
+      - name: Remove tmp files
+        run: rm -rf tmp_ref_site || true
+
+      - name: Commit and push downloaded assets
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore: add reference site assets (downloaded)'
+          commit_user_name: 'crvlstore-bot'
+          commit_user_email: 'noreply@github.com'
+          file_pattern: 'assets/**'
