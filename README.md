@@ -1,5 +1,15 @@
-# crvlstore.github.io
+# Replica do site de referência
 
-Site publicado em https://crvlstore.github.io/
+Esta branch (feature/replica-site) contém a cópia do layout, scripts e assets para tornar o site visualmente semelhante ao site de referência.
 
-Este repositório contém a versão do site CRVL Store (clone) pronta para GitHub Pages. O frontend aponta para um backend Vercel que recebe pedidos em /api/orders. Atualize `js/config.js` para inserir a URL do seu backend Vercel.
+Arquivos adicionados:
+- index.html
+- css/style.css
+- js/config.js
+- js/app.js
+- products.json
+- assets/images/* (imagens em SVG como placeholders)
+
+Observações:
+- As imagens foram adicionadas como SVGs placeholders. Se quiser que eu substitua pelas imagens originais do site de referência, forneça os arquivos ou autorize download e eu atualizo.
+- O frontend já aponta para o backend: https://crvlstore-github-io.vercel.app (API_BASE).

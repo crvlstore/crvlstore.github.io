@@ -3,36 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CRVL Store — Clone</title>
+  <title>CRVL Store — Oficial</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
-      <h1 class="logo">CRVL Store</h1>
-      <nav>
+    <div class="container header-inner">
+      <h1 class="logo">CRVL</h1>
+      <nav class="main-nav">
         <a href="#home">Home</a>
         <a href="#shop">Loja</a>
         <a href="#about">Sobre</a>
-        <button id="cart-btn">Carrinho (<span id="cart-count">0</span>)</button>
       </nav>
+      <div class="header-actions">
+        <button id="cart-btn" aria-label="Abrir carrinho">Carrinho (<span id="cart-count">0</span>)</button>
+      </div>
     </div>
   </header>
 
   <main class="container">
     <section id="home" class="hero">
-      <h2>Loja de tênis e produtos streetwear</h2>
-      <p>Clone funcional — navegue, adicione ao carrinho e finalize compra (teste).</p>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h2>CRVL — Streetwear & Tênis</h2>
+          <p>Estilo urbano com peças selecionadas. Explore a coleção.</p>
+          <a href="#shop" class="cta">Ver produtos</a>
+        </div>
+        <div class="hero-image"><img src="assets/images/hero.svg" alt="CRVL — streetwear" /></div>
+      </div>
     </section>
 
-    <section id="shop">
-      <h2>Produtos</h2>
+    <section id="shop" class="shop">
+      <h2>Produtos em destaque</h2>
       <div id="products" class="products-grid"></div>
     </section>
 
-    <section id="about">
-      <h2>Sobre</h2>
-      <p>Site estático criado a partir do repositório crvl-store-clone. Backend para pedidos deploy separado.</p>
+    <section id="about" class="about">
+      <h2>Sobre a CRVL</h2>
+      <p>Projeto clone para demonstração. Checkout funcional integrado com backend.</p>
     </section>
 
     <section id="checkout" class="modal hidden">
@@ -43,7 +51,7 @@
           <label>Nome completo<input name="name" required /></label>
           <label>E‑mail<input name="email" type="email" required /></label>
           <label>Endereço<input name="address" required /></label>
-          <button type="submit">Enviar pedido</button>
+          <button type="submit" class="btn-primary">Enviar pedido</button>
         </form>
         <div id="checkout-result" class="result"></div>
       </div>
@@ -55,13 +63,13 @@
     <div class="container">© CRVL Store — clone</div>
   </footer>
 
-  <div id="cart-panel" class="cart-panel hidden">
+  <aside id="cart-panel" class="cart-panel hidden" aria-hidden="true">
     <h3>Seu Carrinho</h3>
     <div id="cart-items"></div>
     <div class="cart-summary">Total: R$ <span id="cart-total">0.00</span></div>
-    <button id="checkout-open">Ir para checkout</button>
-    <button id="cart-clear">Limpar carrinho</button>
-  </div>
+    <button id="checkout-open" class="btn-primary">Ir para checkout</button>
+    <button id="cart-clear" class="btn-secondary">Limpar carrinho</button>
+  </aside>
 
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>
