@@ -1,23 +1,24 @@
 /* Estilos base — versão ajustada para catálogo (sistema de compras removido) */
 :root{--accent:#111;--muted:#666;--accent-2:#f04;--bg:#fff}
 *{box-sizing:border-box}
-/* Usar stack de fontes do sistema para uma fonte básica e rápida sem necessidade de upload */
-body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;color:var(--accent);background:var(--bg);font-weight:400}
+/* Font stack do sistema; ajustes de legibilidade */
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;margin:0;color:var(--accent);background:var(--bg);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .container{max-width:1100px;margin:0 auto;padding:1rem}
 .site-header{border-bottom:1px solid #eee}
 .header-inner{display:flex;align-items:center;justify-content:space-between}
-.logo{font-weight:800;letter-spacing:.08em}
+.logo{font-weight:800;letter-spacing:.12em;font-size:1.25rem}
 .main-nav a{margin-right:1rem;color:var(--accent);text-decoration:none}
-.hero{padding:2.5rem 0;background:linear-gradient(90deg,#fff,#fafafa)}
+.hero{padding:3rem 0;background:linear-gradient(90deg,#fff,#fafafa)}
 .hero-inner{display:flex;gap:1.5rem;align-items:center}
-.hero-text h2{font-size:2rem;margin:0 0 .5rem}
-.cta{display:inline-block;background:var(--accent-2);color:#fff;padding:.6rem 1rem;border-radius:6px;text-decoration:none}
+.hero-text h2{font-size:2.2rem;margin:0 0 .6rem;line-height:1.12;letter-spacing:0}
+.hero-text p{font-size:1rem;color:var(--muted);margin:0 0 1rem}
+.cta{display:inline-block;background:var(--accent-2);color:#fff;padding:.64rem 1.05rem;border-radius:6px;text-decoration:none;font-weight:700}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
 .card{border:1px solid #eee;padding:1rem;border-radius:8px;background:#fff}
-.card img{width:100%;height:160px;object-fit:cover;border-radius:6px}
-.card h4{margin:.5rem 0}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:6px}
+.card h4{margin:.5rem 0;font-size:1.05rem}
 .card .price{font-weight:700;margin-bottom:.5rem}
 .card .meta{color:var(--muted);font-size:.9rem}
 .btn-link{display:inline-block;margin-top:.6rem;color:var(--accent-2);text-decoration:none}
 .site-footer{padding:1rem 0;text-align:center;border-top:1px solid #eee;margin-top:2rem}
-@media(max-width:720px){.hero-inner{flex-direction:column}.header-inner{flex-direction:column;gap:.6rem}}
+@media(max-width:720px){.hero-inner{flex-direction:column}.header-inner{flex-direction:column;gap:.6rem}.hero-text h2{font-size:1.6rem}}
