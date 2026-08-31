@@ -1,4 +1,4 @@
-// app.js: carregamento de produtos, carrinho e checkout
+// app.js: versão adaptada com comportamento semelhante ao site de referência
 const API_BASE = window.APP_CONFIG && window.APP_CONFIG.API_BASE ? window.APP_CONFIG.API_BASE : '';
 const PRODUCTS_URL = 'products.json';
 let products = []
@@ -15,7 +15,7 @@ async function loadProducts(){
   products.forEach(p=>{
     const el = document.createElement('div'); el.className='card';
     el.innerHTML = `
-      <img src="${p.image}" alt="${p.title}" />
+      <img src="assets/images/${p.image}" alt="${p.title}" />
       <h4>${p.title}</h4>
       <div class="price">R$ ${p.price.toFixed(2)}</div>
       <p>${p.description}</p>
@@ -47,7 +47,7 @@ function addEvents(){
       const url = (API_BASE||'') + '/api/orders';
       const res = await fetch(url, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});
       const json = await res.json();
-      if(res.ok){ document.getElementById('checkout-result').innerText = 'Pedido enviado! ID: '+json.id; cart=[]; saveCart(); renderCartPanel(); }
+      if(res.ok){ document.getElementById('checkout-result').innerText = 'Pedido enviado! ID: '+(json.id||json.path||'---'); cart=[]; saveCart(); renderCartPanel(); }
       else document.getElementById('checkout-result').innerText = 'Erro: '+(json.message||res.statusText);
     }catch(err){ document.getElementById('checkout-result').innerText = 'Erro ao enviar pedido: '+err.message }
   })
