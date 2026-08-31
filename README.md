@@ -1,15 +1,10 @@
-# Replica do site de referência
+# Replica do site de referência — versão final (catálogo)
 
-Esta branch (feature/replica-site) contém a cópia do layout, scripts e assets para tornar o site visualmente semelhante ao site de referência.
+Esta versão implementa o visual do site de referência com os assets presentes no repositório. Conforme solicitado, o sistema de compras foi REMOVIDO — não há carrinho, checkout ou chamadas ao backend.
 
-Arquivos adicionados:
-- index.html
-- css/style.css
-- js/config.js
-- js/app.js
-- products.json
-- assets/images/* (imagens em SVG como placeholders)
+O que foi feito:
+- Substituí o conteúdo do site para exibir um catálogo estático (index.html + css/style.css + js/app.js).
+- Mantive os produtos listados em products.json e as imagens em assets/images/ (placeholders SVG).
+- Removi referências a API/backend do frontend.
 
-Observações:
-- As imagens foram adicionadas como SVGs placeholders. Se quiser que eu substitua pelas imagens originais do site de referência, forneça os arquivos ou autorize download e eu atualizo.
-- O frontend já aponta para o backend: https://crvlstore-github-io.vercel.app (API_BASE).
+Se desejar reintegrar um sistema de pedidos no futuro, posso orientar sobre a melhor forma (Stripe, banco de dados, ou uso de API/GitHub como antes).

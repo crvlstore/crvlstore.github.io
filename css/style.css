@@ -1,4 +1,4 @@
-/* Estilos inspirados no site de referência — organizado e responsivo */
+/* Estilos base — versão ajustada para catálogo (sistema de compras removido) */
 :root{--accent:#111;--muted:#666;--accent-2:#f04;--bg:#fff}
 *{box-sizing:border-box}
 body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;color:var(--accent);background:var(--bg)}
@@ -7,7 +7,6 @@ body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;color:var(--accent);b
 .header-inner{display:flex;align-items:center;justify-content:space-between}
 .logo{font-weight:800;letter-spacing:.08em}
 .main-nav a{margin-right:1rem;color:var(--accent);text-decoration:none}
-.header-actions button{padding:.4rem .6rem}
 .hero{padding:2.5rem 0;background:linear-gradient(90deg,#fff,#fafafa)}
 .hero-inner{display:flex;gap:1.5rem;align-items:center}
 .hero-text h2{font-size:2rem;margin:0 0 .5rem}
@@ -16,13 +15,8 @@ body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;color:var(--accent);b
 .card{border:1px solid #eee;padding:1rem;border-radius:8px;background:#fff}
 .card img{width:100%;height:160px;object-fit:cover;border-radius:6px}
 .card h4{margin:.5rem 0}
-.card .price{font-weight:700}
-.cart-panel{position:fixed;right:16px;bottom:16px;width:340px;background:#fff;border:1px solid #ddd;padding:1rem;border-radius:8px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
-.hidden{display:none}
-.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4)}
-.modal-content{background:#fff;padding:1.2rem;border-radius:8px;max-width:480px;width:100%}
-.close{float:right;border:0;background:transparent;font-size:1.2rem}
-.btn-primary{background:var(--accent-2);color:#fff;padding:.6rem 1rem;border:0;border-radius:6px}
-.btn-secondary{background:#eee;padding:.5rem .8rem;border:0;border-radius:6px}
+.card .price{font-weight:700;margin-bottom:.5rem}
+.card .meta{color:var(--muted);font-size:.9rem}
+.btn-link{display:inline-block;margin-top:.6rem;color:var(--accent-2);text-decoration:none}
 .site-footer{padding:1rem 0;text-align:center;border-top:1px solid #eee;margin-top:2rem}
 @media(max-width:720px){.hero-inner{flex-direction:column}.header-inner{flex-direction:column;gap:.6rem}}
