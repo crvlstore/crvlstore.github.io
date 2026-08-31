@@ -3,10 +3,18 @@ name: Download reference site assets
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   download:
-    name: Download and commit assets from reference site
+    name: Download and push assets from reference site (create branch + PR)
     runs-on: ubuntu-latest
+
+    env:
+      REF_URL: "https://girafinha67.github.io/CRVL-store-/"
+      BRANCH_NAME: "assets/download-${{ github.run_id }}"
 
     steps:
       - name: Checkout repository
@@ -20,12 +28,12 @@ jobs:
       - name: Download reference site
         run: |
           set -euo pipefail
-          REF_URL="https://girafinha67.github.io/CRVL-store-/"
           TMP="tmp_ref_site"
+          rm -rf "$TMP" || true
           mkdir -p "$TMP"
           cd "$TMP"
           # Mirror the site into tmp_ref_site
-          wget --mirror --convert-links --adjust-extension --no-parent "$REF_URL"
+          wget --mirror --convert-links --adjust-extension --no-parent "${REF_URL}"
 
       - name: Collect images & fonts
         run: |
@@ -48,7 +56,6 @@ jobs:
       - name: Normalize filenames (remove query strings)
         run: |
           set -euo pipefail
-          # Some files may have query strings in names - normalize by using basename
           for f in assets/images/*; do
             [ -e "$f" ] || continue
             bn=$(basename "$f" | sed 's/?.*$//')
@@ -67,10 +74,19 @@ jobs:
       - name: Remove tmp files
         run: rm -rf tmp_ref_site || true
 
-      - name: Commit and push downloaded assets
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Create Pull Request with downloaded assets
+        uses: peter-evans/create-pull-request@v4
         with:
-          commit_message: 'chore: add reference site assets (downloaded)'
-          commit_user_name: 'crvlstore-bot'
-          commit_user_email: 'noreply@github.com'
-          file_pattern: 'assets/**'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: add reference site assets (downloaded)'
+          commit-author: 'crvlstore-bot <noreply@github.com>'
+          branch: ${{ env.BRANCH_NAME }}
+          title: 'chore: add reference site assets (downloaded)'
+          body: |
+            This pull request adds assets mirrored from the reference site (images and fonts) into assets/images/ and assets/fonts/.
+
+            Please review the files before merging.
+          base: main
+          paths: |
+            assets/images/**
+            assets/fonts/**
