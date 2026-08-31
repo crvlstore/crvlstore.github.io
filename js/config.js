@@ -1,4 +1,4 @@
-// Configure aqui a URL do seu backend (Vercel). Exemplo: https://meu-backend.vercel.app
+// Configure aqui a URL do seu backend (Vercel).
 window.APP_CONFIG = {
-  API_BASE: 'https://REPLACE_WITH_YOUR_VERCEL_URL'
+  API_BASE: 'https://crvlstore-github-io.vercel.app'
 };
