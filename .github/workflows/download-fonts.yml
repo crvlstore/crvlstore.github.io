@@ -1,0 +1,77 @@
+name: Download reference site fonts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  download-fonts:
+    name: Download and push fonts from reference site (create branch + PR)
+    runs-on: ubuntu-latest
+
+    env:
+      REF_URL: "https://girafinha67.github.io/CRVL-store-/"
+      BRANCH_NAME: "assets/fonts-download-${{ github.run_id }}"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install wget
+        run: sudo apt-get update && sudo apt-get install -y wget
+
+      - name: Download reference site
+        run: |
+          set -euo pipefail
+          TMP="tmp_ref_site"
+          rm -rf "$TMP" || true
+          mkdir -p "$TMP"
+          cd "$TMP"
+          wget --mirror --convert-links --adjust-extension --no-parent "${REF_URL}"
+
+      - name: Collect font files
+        run: |
+          set -euo pipefail
+          REPO_ROOT="${{ github.workspace }}"
+          # Try to locate downloaded site files under tmp_ref_site
+          find tmp_ref_site -maxdepth 3 -type d -print
+          mkdir -p "$REPO_ROOT/assets/fonts"
+          # Copy common font file extensions
+          find tmp_ref_site -type f \( -iname "*.woff" -o -iname "*.woff2" -o -iname "*.ttf" -o -iname "*.otf" \) -print0 | xargs -0 -I {} cp {} "$REPO_ROOT/assets/fonts/" || true
+          # List copied files
+          ls -la "$REPO_ROOT/assets/fonts" || true
+
+      - name: Normalize filenames (remove query strings)
+        run: |
+          set -euo pipefail
+          for f in assets/fonts/*; do
+            [ -e "$f" ] || continue
+            bn=$(basename "$f" | sed 's/?.*$//')
+            if [ "$bn" != "$(basename "$f")" ]; then
+              mv "$f" "assets/fonts/$bn"
+            fi
+          done
+
+      - name: Remove tmp files
+        run: rm -rf tmp_ref_site || true
+
+      - name: Create Pull Request with downloaded fonts
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: add reference site fonts (downloaded)'
+          commit-author: 'crvlstore-bot <noreply@github.com>'
+          branch: ${{ env.BRANCH_NAME }}
+          title: 'chore: add reference site fonts (downloaded)'
+          body: |
+            This pull request adds font files mirrored from the reference site into assets/fonts/.
+
+            Please review the files before merging.
+          base: main
+          paths: |
+            assets/fonts/**
