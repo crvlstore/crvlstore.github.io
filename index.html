@@ -26,7 +26,7 @@
           <p>Estilo urbano com peças selecionadas. Explore a coleção.</p>
           <a href="#shop" class="cta">Ver produtos</a>
         </div>
-        <div class="hero-image"><img src="assets/images/hero.svg" alt="CRVL — streetwear" /></div>
+        <div class="hero-image"><img src="assets/images/hero.svg" alt="CRVL — streetwear" loading="lazy" /></div>
       </div>
     </section>
 
@@ -35,13 +35,13 @@
         <h3 class="section-title">Postagens</h3>
         <div class="grid">
           <figure class="post">
-            <img src="assets/images/gallery-1.jpg" alt="Post 1">
+            <img src="assets/images/gallery-1.jpg" alt="Post 1" loading="lazy" data-caption="Post 1" />
           </figure>
           <figure class="post">
-            <img src="assets/images/gallery-2.jpg" alt="Post 2">
+            <img src="assets/images/gallery-2.jpg" alt="Post 2" loading="lazy" data-caption="Post 2" />
           </figure>
           <figure class="post">
-            <img src="assets/images/gallery-3.jpg" alt="Post 3">
+            <img src="assets/images/gallery-3.jpg" alt="Post 3" loading="lazy" data-caption="Post 3" />
           </figure>
         </div>
       </div>
@@ -62,6 +62,13 @@
   <footer class="site-footer">
     <div class="container">© CRVL Store — clone</div>
   </footer>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Fechar">×</button>
+    <img class="lightbox-img" src="" alt="" />
+    <div class="lightbox-caption"></div>
+  </div>
 
   <script src="js/app.js"></script>
 </body>
